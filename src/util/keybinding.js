@@ -19,17 +19,17 @@ export default (e) => {
       // @
       case 50: return 'showlinkinput';
       // #
-      case 51: return 'changetype:header-three';
+      case 51: return 'changetype:header-one';
       // *
       case 56: return 'changetype:unordered-list-item';
       // <
-      case 188: return 'changetype:caption';
+      // case 188: return 'changetype:caption';
       // // -
       // case 189: return 'changetype:caption';
       // >
       case 190: return 'changetype:unstyled';
       // "
-      case 222: return 'changetype:blockquote';
+      // case 222: return 'changetype:blockquote';
       default: return getDefaultKeyBinding(e);
     }
   }

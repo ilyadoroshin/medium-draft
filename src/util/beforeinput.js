@@ -9,9 +9,9 @@ this dictionary, that particular block's type will be changed to the value
 associated with that key.
 */
 export const StringToTypeMap = {
-  '--': `${Block.BLOCKQUOTE}:${Block.BLOCKQUOTE_CAPTION}:${Block.CAPTION}`,
+  // '--': `${Block.BLOCKQUOTE}:${Block.BLOCKQUOTE_CAPTION}:${Block.CAPTION}`,
   // '""': Block.BLOCKQUOTE,
-  '> ': Block.BLOCKQUOTE,
+  // '> ': Block.BLOCKQUOTE,
   // '\'\'': Block.BLOCKQUOTE,
   '*.': Block.UL,
   '* ': Block.UL,
@@ -20,7 +20,7 @@ export const StringToTypeMap = {
   '# ': Block.H1,
   '##': Block.H2,
   '==': Block.UNSTYLED,
-  '[]': Block.TODO,
+  // '[]': Block.TODO,
 };
 
 

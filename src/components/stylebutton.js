@@ -25,7 +25,6 @@ export default class StyleButton extends React.Component {
       className += ' RichEditor-activeButton';
     }
     className += ` RichEditor-styleButton-${this.props.style.toLowerCase()}`;
-    console.log(this.props);
     return (
       <span
         className={`${className} hint--top`}
