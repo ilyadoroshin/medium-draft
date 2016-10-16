@@ -127,7 +127,9 @@ class MediumDraftEditor extends React.Component {
       if (url.indexOf('@') >= 0) {
         newUrl = `mailto:${newUrl}`;
       } else if (url.indexOf('http') === -1) {
-        newUrl = `http://${newUrl}`;
+        if (url.indexOf('/') === -1) {
+          newUrl = `http://${newUrl}`;
+        }
       }
       entityKey = Entity.create(E.LINK, 'MUTABLE', { url: newUrl });
     }

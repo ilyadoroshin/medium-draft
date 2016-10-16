@@ -59,7 +59,7 @@ export default class Toolbar extends React.Component {
 
     // eslint-disable-next-line react/no-find-dom-node
     const toolbarNode = ReactDOM.findDOMNode(this);
-    const toolbarBoundary = toolbarNode.getBoundingClientRect();
+    // const toolbarBoundary = toolbarNode.getBoundingClientRect();
 
     // eslint-disable-next-line react/no-find-dom-node
     const parent = ReactDOM.findDOMNode(this.props.editorNode);
@@ -69,9 +69,10 @@ export default class Toolbar extends React.Component {
     * Main logic for setting the toolbar position.
     */
     toolbarNode.style.top =
-      `${(selectionBoundary.top - parentBoundary.top - toolbarBoundary.height - 5)}px`;
-    toolbarNode.style.width = `${toolbarBoundary.width}px`;
-    const widthDiff = selectionBoundary.width - toolbarBoundary.width;
+      `${(selectionBoundary.top - parentBoundary.top - 45)}px`;
+    toolbarNode.style.width = '250px';
+    const widthDiff = selectionBoundary.width - 250;
+
     if (widthDiff >= 0) {
       toolbarNode.style.left = `${widthDiff / 2}px`;
     } else {
@@ -179,35 +180,26 @@ export default class Toolbar extends React.Component {
     if (!editorEnabled || editorState.getSelection().isCollapsed()) {
       isOpen = false;
     }
-    if (showURLInput) {
-      let className = `md-editor-toolbar${(isOpen ? ' md-editor-toolbar--isopen' : '')}`;
-      className += ' md-editor-toolbar--linkinput';
-      return (
-        <div
-          className={className}
-        >
-          <div
-            className="RichEditor-controls RichEditor-show-link-input"
-            style={{ display: 'block' }}
-          >
-            <span className="md-url-input-close" onMouseDown={this.hideLinkInput}>&times;</span>
-            <input
-              ref={node => { this.urlinput = node; }}
-              type="text"
-              className="md-url-input"
-              onKeyDown={this.onKeyDown}
-              onChange={this.onChange}
-              placeholder="Press ENTER or ESC"
-              value={urlInputValue}
-            />
-          </div>
-        </div>
-      );
-    }
+
+    let classes = ['md-editor-toolbar'];
+    if (isOpen) classes = classes.concat('md-editor-toolbar--isopen');
+    if (showURLInput) classes = classes.concat('md-editor-toolbar--linkinput');
+
     return (
-      <div
-        className={`md-editor-toolbar${(isOpen ? ' md-editor-toolbar--isopen' : '')}`}
-      >
+      <div className={classes.join(' ')}>
+        <div className="RichEditor-controls RichEditor-show-link-input">
+          <span className="md-url-input-close" onMouseDown={this.hideLinkInput}>OK</span>
+          <input
+            ref={node => { this.urlinput = node; }}
+            type="text"
+            className="md-url-input"
+            onKeyDown={this.onKeyDown}
+            onChange={this.onChange}
+            placeholder="Press ENTER or ESC"
+            value={urlInputValue}
+          />
+        </div>
+
         {this.props.blockButtons.length > 0 ? (
           <BlockToolbar
             editorState={editorState}
@@ -215,6 +207,7 @@ export default class Toolbar extends React.Component {
             buttons={this.props.blockButtons}
           />
         ) : null}
+
         {this.props.inlineButtons.length > 0 ? (
           <InlineToolbar
             editorState={editorState}
@@ -222,14 +215,14 @@ export default class Toolbar extends React.Component {
             buttons={this.props.inlineButtons}
           />
         ) : null}
+
         <div className="RichEditor-controls">
-          <a
+          <div
             className="RichEditor-styleButton RichEditor-linkButton hint--top"
-            href="#open-link-input"
             onClick={this.handleLinkInput} aria-label="Add a link"
           >
-            #
-          </a>
+            <i className="zmdi zmdi-link" />
+          </div>
         </div>
       </div>
     );
@@ -238,76 +231,39 @@ export default class Toolbar extends React.Component {
 
 export const BLOCK_BUTTONS = [
   {
-    label: 'H3',
-    style: 'header-three',
-    icon: 'header',
-    description: 'Heading 3',
+    icon: 'H',
+    style: 'header-one',
+    description: 'Heading',
   },
-  // {
-  //   label: 'P',
-  //   style: 'unstyled',
-  //   description: 'Paragraph',
-  // },
+
   {
-    label: 'Q',
-    style: 'blockquote',
-    icon: 'quote-right',
-    description: 'Blockquote',
-  },
-  {
-    label: 'UL',
+    icon: 'UL',
     style: 'unordered-list-item',
-    icon: 'list-ul',
     description: 'Unordered List',
   },
   {
-    label: 'OL',
+    icon: 'OL',
     style: 'ordered-list-item',
-    icon: 'list-ol',
     description: 'Ordered List',
-  },
-  {
-    label: '✓',
-    style: 'todo',
-    description: 'Todo List',
   },
 ];
 
 export const INLINE_BUTTONS = [
   {
-    label: 'B',
+    icon: 'B',
     style: 'BOLD',
-    icon: 'bold',
     description: 'Bold',
   },
   {
-    label: 'I',
+    icon: 'I',
     style: 'ITALIC',
-    icon: 'italic',
     description: 'Italic',
   },
   {
-    label: 'U',
+    icon: 'U',
     style: 'UNDERLINE',
-    icon: 'underline',
     description: 'Underline',
   },
-  // {
-  //   label: 'S',
-  //   style: 'STRIKETHROUGH',
-  //   icon: 'strikethrough',
-  //   description: 'Strikethrough',
-  // },
-  {
-    label: 'Hi',
-    style: 'HIGHLIGHT',
-    description: 'Highlight selection',
-  },
-  // {
-  //   label: 'Code',
-  //   style: 'CODE',
-  //   description: 'Inline Code',
-  // },
 ];
 
 Toolbar.propTypes = {
@@ -326,3 +282,14 @@ Toolbar.defaultProps = {
   blockButtons: BLOCK_BUTTONS,
   inlineButtons: INLINE_BUTTONS,
 };
+
+        // <div className="RichEditor-controls">
+        //   <div
+        //     className="RichEditor-styleButton RichEditor-linkButton hint--top"
+        //     onClick={this.handleLinkInput} aria-label="Text format"
+        //   >
+        //     <i className="zmdi zmdi-text-format" />
+        //   </div>
+        // </div>
+        //
+        //

@@ -107,7 +107,17 @@ function getEntry(env) {
 }
 
 function getLoaders(env) {
-  var loaders = [];
+  var loaders = [
+    {
+      test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      loaders: ["url?limit=10000&mimetype=application/font-woff"],
+    },
+    {
+      test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      loaders: ["file"],
+    },
+  ];
+
   loaders.push({
     test: /\.jsx?$/,
     include: APP_DIR,
