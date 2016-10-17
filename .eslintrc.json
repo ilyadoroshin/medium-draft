@@ -4,6 +4,9 @@
   "plugins": [
     "react"
   ],
+  "globals": {
+    "__DEV__": true
+  },
   "rules": {
     "no-underscore-dangle": [0],
     "react/jsx-filename-extension": [0, { "extensions": [".js", ".jsx"] }],

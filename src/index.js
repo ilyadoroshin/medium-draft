@@ -1,3 +1,4 @@
+/* eslint-disable global-require no-undef */
 import Editor from './editor';
 
 import beforeInput, { StringToTypeMap } from './util/beforeinput';
@@ -18,7 +19,9 @@ import BreakBlock from './components/blocks/break';
 import ImageSideButton from './components/sides/image';
 import BreakSideButton from './components/sides/break';
 
-require('material-design-iconic-font/dist/css/material-design-iconic-font.css');
+if (__DEV__) {
+  require('material-design-iconic-font/dist/css/material-design-iconic-font.css'); // eslint-disable-line global-require, max-len
+}
 
 export { Block, Inline, Entity } from './util/constants';
 export { BLOCK_BUTTONS, INLINE_BUTTONS } from './components/toolbar';

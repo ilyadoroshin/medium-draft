@@ -22,6 +22,10 @@ const RenderMap = Map({
   [Block.BREAK]: {
     element: 'div',
   },
+  [Block.LINK]: {
+    element: 'a',
+  },
+
 }).merge(DefaultDraftBlockRenderMap);
 
 
