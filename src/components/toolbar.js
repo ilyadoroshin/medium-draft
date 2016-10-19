@@ -24,6 +24,7 @@ export default class Toolbar extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.handleLinkInput = this.handleLinkInput.bind(this);
     this.hideLinkInput = this.hideLinkInput.bind(this);
+    this.persistChange = this.persistChange.bind(this);
   }
 
   componentWillReceiveProps(newProps) {
@@ -91,15 +92,10 @@ export default class Toolbar extends React.Component {
     }
   }
 
+
   onKeyDown(e) {
     if (e.which === 13) {
-      e.preventDefault();
-      e.stopPropagation();
-      this.props.setLink(this.state.urlInputValue);
-      this.setState({
-        showURLInput: false,
-        urlInputValue: '',
-      }, () => this.props.focus());
+      this.persistChange(e);
     } else if (e.which === 27) {
       this.hideLinkInput(e);
     }
@@ -109,6 +105,16 @@ export default class Toolbar extends React.Component {
     this.setState({
       urlInputValue: e.target.value,
     });
+  }
+
+  persistChange(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    this.props.setLink(this.state.urlInputValue);
+    this.setState({
+      showURLInput: false,
+      urlInputValue: '',
+    }, () => this.props.focus());
   }
 
   handleLinkInput(e, direct = false) {
@@ -167,6 +173,7 @@ export default class Toolbar extends React.Component {
   hideLinkInput(e) {
     e.preventDefault();
     e.stopPropagation();
+    this.props.setLink(this.state.urlInputValue);
     this.setState({
       showURLInput: false,
       urlInputValue: '',
@@ -188,7 +195,7 @@ export default class Toolbar extends React.Component {
     return (
       <div className={classes.join(' ')}>
         <div className="RichEditor-controls RichEditor-show-link-input">
-          <span className="md-url-input-close" onMouseDown={this.hideLinkInput}>OK</span>
+          <span className="md-url-input-close" onMouseDown={this.persistChange}>OK</span>
           <input
             ref={node => { this.urlinput = node; }}
             type="text"

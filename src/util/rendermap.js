@@ -1,7 +1,7 @@
 import { Map } from 'immutable';
 import { DefaultDraftBlockRenderMap } from 'draft-js';
 
-import { Block } from './constants';
+import { Entity, Block } from './constants';
 
 /*
 Mapping that returns containers for the various block types.
@@ -22,10 +22,9 @@ const RenderMap = Map({
   [Block.BREAK]: {
     element: 'div',
   },
-  [Block.LINK]: {
+  [Entity.LINK]: {
     element: 'a',
   },
-
 }).merge(DefaultDraftBlockRenderMap);
 
 
