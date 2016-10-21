@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 
 const ICONS = {
   H: 'fa fa-header',
+  H2: 'fa fa-header',
   OL: 'zmdi zmdi-format-list-numbered',
   UL: 'zmdi zmdi-format-list-bulleted',
   B: 'zmdi zmdi-format-bold',
@@ -21,6 +22,8 @@ export default class StyleButton extends React.Component {
 
   render() {
     let className = 'RichEditor-styleButton';
+    const { label, icon } = this.props;
+
     if (this.props.active) {
       className += ' RichEditor-activeButton';
     }
@@ -31,8 +34,12 @@ export default class StyleButton extends React.Component {
         onMouseDown={this.onToggle}
         aria-label={this.props.description}
       >
-      { this.props.icon && <i className={ICONS[this.props.icon]} /> }
-      { this.props.label && <span>{ this.props.label }</span> }
+      { icon && <i className={ICONS[icon]} /> }
+      { label && label === 'H2' ?
+        <span className="RichEditor-styleButton-h2">
+          <i className={ICONS[label]} />
+        </span> :
+        <span>{ label }</span>}
       </span>
     );
   }

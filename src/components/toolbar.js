@@ -71,8 +71,8 @@ export default class Toolbar extends React.Component {
     */
     toolbarNode.style.top =
       `${(selectionBoundary.top - parentBoundary.top - 45)}px`;
-    toolbarNode.style.width = '250px';
-    const widthDiff = selectionBoundary.width - 250;
+    toolbarNode.style.width = '290px';
+    const widthDiff = selectionBoundary.width - 290;
 
     if (widthDiff >= 0) {
       toolbarNode.style.left = `${widthDiff / 2}px`;
@@ -240,7 +240,13 @@ export const BLOCK_BUTTONS = [
   {
     icon: 'H',
     style: 'header-one',
-    description: 'Heading',
+    description: 'Header',
+  },
+
+  {
+    label: 'H2',
+    style: 'header-two',
+    description: 'Subheader',
   },
 
   {

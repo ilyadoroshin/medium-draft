@@ -158,6 +158,30 @@ $toolbar-color: #fafafa;
 }
 
 .RichEditor-styleButton {
+  .fa-header {
+    &:after {
+      font-size: 14px;
+      font-family: monospace;
+      content: '1';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+.RichEditor-styleButton-h2 {
+  display: block;
+  transform: scale(0.8);
+  .fa-header {
+    &:after {
+      content: '2';
+      font-family: monospace;
+    }
+  }
+}
+
+.RichEditor-styleButton {
   cursor: pointer;
   display: inline-block;
   padding: 0 10px;
