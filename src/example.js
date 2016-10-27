@@ -387,8 +387,8 @@ class App extends React.Component {
 
   logData(e) {
     window.es = this.state.editorState;
-    console.log(convertToRaw(this.state.editorState.getCurrentContent()));
-    console.log(this.state.editorState.getSelection().toJS());
+    // console.log(convertToRaw(this.state.editorState.getCurrentContent()));
+    // console.log(this.state.editorState.getSelection().toJS());
     window.ga('send', 'event', 'draftjs', 'log-data');
   }
 
@@ -399,7 +399,7 @@ class App extends React.Component {
     }
     try {
       const blockData = JSON.parse(data);
-      console.log(blockData);
+      // console.log(blockData);
       this.onChange( EditorState.push(this.state.editorState, convertFromRaw(blockData)), this.refs.editor.focus);
     } catch(e) {
       console.log(e);

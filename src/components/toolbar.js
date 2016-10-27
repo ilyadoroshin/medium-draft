@@ -15,13 +15,16 @@ export default class Toolbar extends React.Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
       showURLInput: false,
       urlInputValue: '',
+      targetBlank: false,
     };
 
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.toggleTargetBlank = this.toggleTargetBlank.bind(this);
     this.handleLinkInput = this.handleLinkInput.bind(this);
     this.hideLinkInput = this.hideLinkInput.bind(this);
     this.persistChange = this.persistChange.bind(this);
@@ -110,7 +113,7 @@ export default class Toolbar extends React.Component {
   persistChange(e) {
     e.preventDefault();
     e.stopPropagation();
-    this.props.setLink(this.state.urlInputValue);
+    this.props.setLink(this.state.urlInputValue, this.state.targetBlank);
     this.setState({
       showURLInput: false,
       urlInputValue: '',
@@ -134,6 +137,7 @@ export default class Toolbar extends React.Component {
     const currentBlock = getCurrentBlock(editorState);
     let selectedEntity = '';
     let linkFound = false;
+
     currentBlock.findEntityRanges((character) => {
       const entityKey = character.getEntity();
       selectedEntity = entityKey;
@@ -147,6 +151,7 @@ export default class Toolbar extends React.Component {
       }
       if (start === selStart && end === selEnd) {
         linkFound = true;
+
         const { url } = Entity.get(selectedEntity).getData();
         this.setState({
           showURLInput: true,
@@ -173,29 +178,52 @@ export default class Toolbar extends React.Component {
   hideLinkInput(e) {
     e.preventDefault();
     e.stopPropagation();
-    this.props.setLink(this.state.urlInputValue);
+    this.props.setLink(this.state.urlInputValue, this.state.targetBlank);
     this.setState({
       showURLInput: false,
       urlInputValue: '',
     }, () => this.props.focus());
   }
 
+  toggleTargetBlank(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    let { targetBlank } = this.state;
+    targetBlank = !targetBlank;
+    this.setState({ targetBlank });
+  }
+
   render() {
     const { editorState, editorEnabled } = this.props;
-    const { showURLInput, urlInputValue } = this.state;
+    const { showURLInput, urlInputValue, targetBlank } = this.state;
     let isOpen = true;
     if (!editorEnabled || editorState.getSelection().isCollapsed()) {
       isOpen = false;
     }
 
+    // console.log(convertToRaw(editorState.getCurrentContent()));
+
     let classes = ['md-editor-toolbar'];
     if (isOpen) classes = classes.concat('md-editor-toolbar--isopen');
     if (showURLInput) classes = classes.concat('md-editor-toolbar--linkinput');
+
+    let linkClasses = ['hint--top', 'hint--rounded', 'md-url-open-new'];
+    if (targetBlank) linkClasses = [...linkClasses, 'md-url-open-new-active'];
 
     return (
       <div className={classes.join(' ')}>
         <div className="RichEditor-controls RichEditor-show-link-input">
           <span className="md-url-input-close" onMouseDown={this.persistChange}>OK</span>
+
+          <span
+            className={linkClasses.join(' ')}
+            aria-label="Open in new window"
+            onMouseDown={this.toggleTargetBlank}
+          >
+            { targetBlank }
+            <i className="zmdi zmdi-open-in-new" />
+          </span>
+
           <input
             ref={node => { this.urlinput = node; }}
             type="text"

@@ -118,7 +118,7 @@ class MediumDraftEditor extends React.Component {
   /*
   Adds a hyperlink on the selected text with some basic checks.
   */
-  setLink(url) {
+  setLink(url, blank = false) {
     const { editorState } = this.props;
     const selection = editorState.getSelection();
     let entityKey = null;
@@ -131,7 +131,9 @@ class MediumDraftEditor extends React.Component {
           newUrl = `http://${newUrl}`;
         }
       }
-      entityKey = Entity.create(E.LINK, 'MUTABLE', { url: newUrl });
+      entityKey = Entity.create(E.LINK, 'MUTABLE', {
+        url: newUrl, target: blank ? '_blank' : undefined,
+      });
     }
     this.onChange(RichUtils.toggleLink(editorState, selection, entityKey), this.focus);
   }

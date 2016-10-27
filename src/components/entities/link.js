@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
 import { Entity } from 'draft-js';
 
-
 export const findLinkEntities = (contentBlock, callback) => {
   contentBlock.findEntityRanges(
     (character) => {
       const entityKey = character.getEntity();
+
+      // if (entityKey) console.log(entityKey, Entity.get(entityKey).getType());
       return (
         entityKey !== null &&
         Entity.get(entityKey).getType() === 'LINK'
@@ -16,13 +17,14 @@ export const findLinkEntities = (contentBlock, callback) => {
 };
 
 const Link = (props) => {
-  const { url } = Entity.get(props.entityKey).getData();
+  const { url, target } = Entity.get(props.entityKey).getData();
+
   return (
     <a
       className="draft-link hint--top hint--rounded"
       href={url}
       rel="noopener noreferrer"
-      target="_blank"
+      target={target}
       aria-label={url}
     >{props.children}</a>
   );
