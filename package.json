@@ -3,6 +3,9 @@
   "version": "0.3.16",
   "description": "A medium like rich text editor built upon draft-js with an emphasis on eliminating mouse usage by adding relevant keyboard shortcuts",
   "main": "lib/index.js",
+  "publishConfig": {
+    "registry": "https://repo.aligntech.com/api/npm/npm-dev-pwa-local"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -f dist/*.js && rm -f dist/*.css && rm -rf lib",
